@@ -2,20 +2,20 @@ use std::collections::HashMap;
 
 use crate::utils::RevWord;
 
-use super::{Daggad, DaggadNode};
+use super::{TWDNode, TWDawg};
 
 #[derive(Debug)]
-pub struct DaggadBuilder<'words> {
-    nodes: Vec<DaggadNode>,
-    minimized: HashMap<DaggadNode, usize>,
+pub struct TWDawgBuilder<'words> {
+    nodes: Vec<TWDNode>,
+    minimized: HashMap<TWDNode, usize>,
     unchecked: Vec<(usize, u8, usize)>,
     previous_word: RevWord<'words>,
 }
 
-impl<'word> DaggadBuilder<'word> {
+impl<'word> TWDawgBuilder<'word> {
     fn new() -> Self {
         let mut nodes = Vec::new();
-        nodes.push(DaggadNode::new(0));
+        nodes.push(TWDNode::new(0));
 
         Self {
             nodes,
@@ -25,7 +25,7 @@ impl<'word> DaggadBuilder<'word> {
         }
     }
 
-    pub fn build_one_way<'words, I: IntoIterator<Item = &'words str>>(words: I) -> Daggad {
+    pub fn build_one_way<'words, I: IntoIterator<Item = &'words str>>(words: I) -> TWDawg {
         // efficient ways to store the reverse word iterations
         let mut rev_words: Vec<RevWord> = words
             .into_iter()
@@ -43,7 +43,7 @@ impl<'word> DaggadBuilder<'word> {
         builder.finalize()
     }
 
-    pub fn build<'words, I: IntoIterator<Item = &'words str>>(words: I) -> Daggad {
+    pub fn build<'words, I: IntoIterator<Item = &'words str>>(words: I) -> TWDawg {
         // efficient ways to store the reverse word iterations
         let mut rev_words: Vec<RevWord> = words
             .into_iter()
@@ -104,18 +104,18 @@ impl<'word> DaggadBuilder<'word> {
         }
     }
 
-    fn finalize(mut self) -> Daggad {
+    fn finalize(mut self) -> TWDawg {
         self.minimize(0);
         // Prob not necessary
         self.minimized.clear();
         self.unchecked.clear();
 
-        Daggad::new(self.nodes)
+        TWDawg::new(self.nodes)
     }
 
     fn build_node(&mut self) -> usize {
         let indice = self.nodes.len();
-        self.nodes.push(DaggadNode::new(indice));
+        self.nodes.push(TWDNode::new(indice));
         indice
     }
 

@@ -1,4 +1,4 @@
-pub mod daggad;
+pub mod tw_dawg;
 mod utils;
 
-pub use daggad::{Daggad, DaggadBuilder, DaggadNode};
+pub use tw_dawg::{TWDNode, TWDawg, TWDawgBuilder};

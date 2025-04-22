@@ -1,13 +1,13 @@
-use daggad::DaggadBuilder;
+use twdawg::TWDawgBuilder;
 
 // Example
 fn main() {
     let words = ["sad", "dog", "ocaml", "node", "dagger", "nod"];
-    let daggad = DaggadBuilder::build(words);
+    let tw_dawg = TWDawgBuilder::build(words);
 
-    let mut all_words = daggad.get_all_words();
+    let mut all_words = tw_dawg.get_all_words();
     all_words.sort();
 
-    println!("{:#?}", daggad);
+    println!("{:#?}", tw_dawg);
     println!("all_words: {:#?}", all_words);
 }

@@ -5,16 +5,16 @@ use std::{
 
 pub const ALPHABET_SIZE: usize = 26;
 
-// Represents a node in the DAGGAD.
+// Represents a node in the TWDawg.
 #[derive(Clone)]
-pub struct DaggadNode {
+pub struct TWDNode {
     pub id: usize,
     pub is_terminal: bool,
     // Extra for reverse
     pub edges: [Option<usize>; ALPHABET_SIZE + 1],
 }
 
-impl DaggadNode {
+impl TWDNode {
     pub fn new(id: usize) -> Self {
         Self {
             id,
@@ -39,22 +39,22 @@ impl DaggadNode {
 }
 
 // Ignore `id` for equality checks
-impl PartialEq for DaggadNode {
+impl PartialEq for TWDNode {
     fn eq(&self, other: &Self) -> bool {
         self.edges[0..ALPHABET_SIZE + 1] == other.edges[0..ALPHABET_SIZE + 1]
     }
 }
 
-impl Eq for DaggadNode {}
+impl Eq for TWDNode {}
 
-impl Hash for DaggadNode {
+impl Hash for TWDNode {
     fn hash<H: Hasher>(&self, state: &mut H) {
         // faster hashing instead of hashmap
         self.edges.iter().for_each(|v| v.hash(state));
     }
 }
 
-impl fmt::Debug for DaggadNode {
+impl fmt::Debug for TWDNode {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let mut edge_map = Vec::new();
         for (i, &edge) in self.edges.iter().take(ALPHABET_SIZE).enumerate() {
@@ -64,7 +64,7 @@ impl fmt::Debug for DaggadNode {
             }
         }
 
-        f.debug_struct("DaggadNode")
+        f.debug_struct("TWDNode")
             .field("id", &self.id)
             .field("is_terminal", &self.is_terminal)
             .field("edges", &edge_map)

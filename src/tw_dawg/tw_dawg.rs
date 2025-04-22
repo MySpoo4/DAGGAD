@@ -1,22 +1,22 @@
 use crate::utils::StrBuilder;
 
-use super::{DaggadNode, node::ALPHABET_SIZE};
+use super::{TWDNode, node::ALPHABET_SIZE};
 
 #[derive(Debug)]
-pub struct Daggad {
-    nodes: Vec<DaggadNode>,
+pub struct TWDawg {
+    nodes: Vec<TWDNode>,
 }
 
-impl Daggad {
-    pub fn new(nodes: Vec<DaggadNode>) -> Self {
+impl TWDawg {
+    pub fn new(nodes: Vec<TWDNode>) -> Self {
         Self { nodes }
     }
 
-    pub fn root(&self) -> Option<&DaggadNode> {
+    pub fn root(&self) -> Option<&TWDNode> {
         self.nodes.get(0)
     }
 
-    pub fn get_node(&self, id: usize) -> &DaggadNode {
+    pub fn get_node(&self, id: usize) -> &TWDNode {
         &self.nodes[id]
     }
 
