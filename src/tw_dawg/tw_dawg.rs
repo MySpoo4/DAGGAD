@@ -20,6 +20,22 @@ impl TWDawg {
         &self.nodes[id]
     }
 
+    pub fn contains(&self, word: &str) -> bool {
+        // root node
+        let mut cur_node = self.get_node(0);
+
+        for c in word.to_ascii_uppercase().chars().rev() {
+            cur_node = match cur_node.get(c as u8) {
+                Some(id) => self.get_node(id),
+                None => return false,
+            }
+        }
+
+        cur_node
+            .get('[' as u8)
+            .map_or(false, |n| self.get_node(n).is_terminal)
+    }
+
     pub fn get_all_words(&self) -> Vec<String> {
         let mut words = Vec::new();
         let mut builder = StrBuilder::new();
